@@ -34,7 +34,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(47, 35);
+            this.textBox2.Location = new System.Drawing.Point(39, 33);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(231, 394);
@@ -43,11 +43,11 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(115, 459);
+            this.button2.Location = new System.Drawing.Point(109, 463);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
-            this.button2.Text = "кнопка ";
+            this.button2.Text = "кнопка 2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -55,7 +55,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(338, 537);
+            this.ClientSize = new System.Drawing.Size(306, 537);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox2);
             this.Name = "Form1";
