@@ -101,6 +101,8 @@ namespace WindowsFormsApplication1
                             {
                                 switch (i)
                                 {
+                                    
+                                    //номер
                                     case 1:
                                         string test = excelSheet.Cells[j, i].Value.ToString();
                                         int num;
@@ -108,9 +110,10 @@ namespace WindowsFormsApplication1
                                         if (isNum)
                                             MessageBox.Show(test,"Это число");
                                         else
-                                            MessageBox.Show(test, "Это строка");
-                                        
+                                            MessageBox.Show(test, "Это строка");                                        
                                         break;
+
+                                        //ФИО
                                     case 2:
                                         test = excelSheet.Cells[j, i].Value.ToString();
                                        
@@ -120,7 +123,37 @@ namespace WindowsFormsApplication1
                                         else
                                             MessageBox.Show(test, "Это не строка");
                                         break;
+
+
+                                        //адрес
                                     case 3:
+                                        test = excelSheet.Cells[j, i].Value.ToString();
+                                        //Regex reg = new Regex(@"(\d+)(\.|\,)(\d+)");
+                                        //MatchCollection mc = reg.Matches(s);
+                                        //if (mc.Count > 0) return true;
+                                        //return false;
+                                        isNum = int.TryParse(test, out num);
+                                        if (isNum == false)
+
+                                            MessageBox.Show(test, "Это строка");
+                                        else
+                                            MessageBox.Show(test, "Это не строка");
+                                        break;
+
+                                        //назначение 
+                                    case 4:
+                                        test = excelSheet.Cells[j, i].Value.ToString();
+                                        isNum = int.TryParse(test, out num);
+                                        if (isNum == false)
+                                           
+                                                MessageBox.Show(test, "Это строка");
+                                                                                        
+                                        else
+                                            MessageBox.Show(test, "Это не строка");
+                                        break;
+
+                                        //показания 1
+                                    case 5:
                                         test = excelSheet.Cells[j, i].Value.ToString();
                                         //Regex reg = new Regex(@"(\d+)(\.|\,)(\d+)");
                                         //MatchCollection mc = reg.Matches(s);
@@ -129,20 +162,51 @@ namespace WindowsFormsApplication1
                                         double num2;
                                         isNum = double.TryParse(test, out num2);
                                         if (isNum)
-                                            MessageBox.Show(test, "Это  число"); 
+                                            MessageBox.Show(test, "Это  число");
                                         else
                                             MessageBox.Show(test, "Это ошибка");
                                         break;
-                                    case 4:
+
+                                    //показания 2
+                                    case 6:
+                                    
+                                        test = excelSheet.Cells[j, i].Value.ToString();
+                                        //Regex reg = new Regex(@"(\d+)(\.|\,)(\d+)");
+                                        //MatchCollection mc = reg.Matches(s);
+                                        //if (mc.Count > 0) return true;
+                                        //return false;
+                                       
+                                        isNum = double.TryParse(test, out num2);
+                                        if (isNum)
+                                            MessageBox.Show(test, "Это  число");
+                                        else
+                                            MessageBox.Show(test, "Это ошибка");
+                                        break;
+
+                                        //расход
+                                    case 7:
                                         test = excelSheet.Cells[j, i].Value.ToString();
                                         isNum = double.TryParse(test, out num2);
                                         if (isNum)
                                             MessageBox.Show(test, "Это  число");
                                         else
                                             MessageBox.Show(test, "Это ошибка");
-                                        
+
                                         break;
-                                    case 5:
+
+                                        //сумма
+                                    case 8:
+                                        test = excelSheet.Cells[j, i].Value.ToString();
+                                        isNum = double.TryParse(test, out num2);
+                                        if (isNum)
+                                            MessageBox.Show(test, "Это  число");
+                                        else
+                                            MessageBox.Show(test, "Это ошибка");
+
+                                        break;
+
+                                    //дата
+                                    case 9:
                                         DateTime date;
                                         test = excelSheet.Cells[j, i].Value.ToString();
                                         isNum = DateTime.TryParse(test, out date);
@@ -152,6 +216,8 @@ namespace WindowsFormsApplication1
                                             MessageBox.Show(test, "Это ошибка");
 
                                         break;
+
+
                                     default:
                                         MessageBox.Show("Default case");
                                         break;
@@ -176,6 +242,7 @@ namespace WindowsFormsApplication1
                 }
                 finally
                 {
+                    workbookb.SaveAs(way + @"\2.xlsx" );
                     workbookb.Close();
                 }
 
