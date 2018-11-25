@@ -21,27 +21,11 @@ namespace WindowsFormsApplication1
             InitializeComponent();
         }
         string way = "";
-        
-        
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-       
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            string oshibke = "";
+            int yui= 1;
             FolderBrowserDialog FBD = new FolderBrowserDialog();
             FBD.ShowNewFolderButton = false;
             if (FBD.ShowDialog() == DialogResult.OK)
@@ -64,38 +48,38 @@ namespace WindowsFormsApplication1
                 Workbook workbookb = excel.Workbooks.Open(way + @"\" + fail.Name);
                 try
                 {
-                    
                     Worksheet excelSheet = workbookb.ActiveSheet;
-                    //Read the first cell
-                    int count_i = 5;
-                    int count_j = 5;
-                    //while (true)
-                    //{
-                    //    if (excelSheet.Cells[count_i, count_j].Value != null)
-                    //    {
-                    //        count_i++;
-                    //    }
-                    //    else
-                    //    {
-                    //        MessageBox.Show(Convert.ToString(count_i - 1));
-                    //        break;
-                    //    }
-                    //}
-                    //while (true)
-                    //{
-                    //    if (excelSheet.Cells[count_i, count_j].Value != null)
-                    //    {
-                    //        count_j++;
-                    //    }
-                    //    else
-                    //    {
-                    //        MessageBox.Show(Convert.ToString(count_j - 1));
-                    //        break;
-                    //    }
-                    //}
-                    for (int i = 1; i <= count_i ; i++)
+                    
+                    int count_i = 1;//кол-во столбцов
+                    int count_j = 1;//кол-во строк
+                    while (true)
                     {
-                        for (int j = 2; j <= count_j; j++)
+                        if (excelSheet.Cells[count_i, 1].Value != null)
+                        {
+                            count_i++;
+                        }
+                        else
+                        {
+                            MessageBox.Show(Convert.ToString(count_i - 1));
+                            break;
+                        }
+                    }
+                    
+                    while (true)
+                    {
+                        if (excelSheet.Cells[1, count_j].Value != null)
+                        {
+                            count_j++;
+                        }
+                        else
+                        {
+                            MessageBox.Show(Convert.ToString(count_j - 1));
+                            break;
+                        }
+                    }
+                    for (int i = 1; i <= count_i-1 ; i++)
+                    {
+                        for (int j = 2; j <= count_j-1; j++)
                         {
                             if (excelSheet.Cells[j, i].Value != null)
                             {
@@ -108,9 +92,11 @@ namespace WindowsFormsApplication1
                                         int num;
                                         bool isNum = int.TryParse(test, out num);
                                         if (isNum)
-                                            MessageBox.Show(test,"Это число");
+                                            //MessageBox.Show(test, "Это число");
+                                            yui = 1;
                                         else
-                                            MessageBox.Show(test, "Это строка");                                        
+                                            /*MessageBox.Show(test, "Это строка")*/
+                                            oshibke += "\n\r Ошибка в столбце '№', строка " + j + " столбец" + i + "\n\r";
                                         break;
 
                                         //ФИО
@@ -119,25 +105,25 @@ namespace WindowsFormsApplication1
                                        
                                          isNum = int.TryParse(test, out num);
                                         if (isNum ==false)
-                                            MessageBox.Show(test, "Это строка"); 
+                                            //MessageBox.Show(test, "Это строка"); 
+                                            yui = 1;
                                         else
-                                            MessageBox.Show(test, "Это не строка");
+                                            //MessageBox.Show(test, "Это не строка");
+                                            oshibke += "\n\rОшибка в столбце 'ФИО', строка " + j + " столбец" + i + "\n\r";
                                         break;
 
 
                                         //адрес
                                     case 3:
                                         test = excelSheet.Cells[j, i].Value.ToString();
-                                        //Regex reg = new Regex(@"(\d+)(\.|\,)(\d+)");
-                                        //MatchCollection mc = reg.Matches(s);
-                                        //if (mc.Count > 0) return true;
-                                        //return false;
+                                       
                                         isNum = int.TryParse(test, out num);
                                         if (isNum == false)
-
-                                            MessageBox.Show(test, "Это строка");
+                                            yui = 1;
+                                            //MessageBox.Show(test, "Это строка");
                                         else
-                                            MessageBox.Show(test, "Это не строка");
+                                            //MessageBox.Show(test, "Это не строка");
+                                            oshibke += "\n\rОшибка в столбце 'Адрес', строка " + j + " столбец" + i + "\n\r";
                                         break;
 
                                         //назначение 
@@ -145,11 +131,12 @@ namespace WindowsFormsApplication1
                                         test = excelSheet.Cells[j, i].Value.ToString();
                                         isNum = int.TryParse(test, out num);
                                         if (isNum == false)
-                                           
-                                                MessageBox.Show(test, "Это строка");
-                                                                                        
+                                            yui = 1;
+                                            //MessageBox.Show(test, "Это строка");
+                                        
                                         else
-                                            MessageBox.Show(test, "Это не строка");
+                                            //MessageBox.Show(test, "Это не строка");
+                                            oshibke += "\n\r Ошибка в столбце 'Назначении платежа', строка " + j + " столбец" + i + "\n\r";
                                         break;
 
                                         //показания 1
@@ -162,25 +149,26 @@ namespace WindowsFormsApplication1
                                         double num2;
                                         isNum = double.TryParse(test, out num2);
                                         if (isNum)
-                                            MessageBox.Show(test, "Это  число");
+                                            yui = 1;
+                                            //MessageBox.Show(test, "Это  число");
                                         else
-                                            MessageBox.Show(test, "Это ошибка");
+                                            //MessageBox.Show(test, "Это ошибка");
+                                            oshibke += "\n\r Ошибка в столбце 'Показания 1', строка " + j+" столбец " + i + "\n\r";
                                         break;
 
                                     //показания 2
                                     case 6:
                                     
                                         test = excelSheet.Cells[j, i].Value.ToString();
-                                        //Regex reg = new Regex(@"(\d+)(\.|\,)(\d+)");
-                                        //MatchCollection mc = reg.Matches(s);
-                                        //if (mc.Count > 0) return true;
-                                        //return false;
+                                       
                                        
                                         isNum = double.TryParse(test, out num2);
                                         if (isNum)
-                                            MessageBox.Show(test, "Это  число");
+                                            yui = 1;
+                                            //MessageBox.Show(test, "Это  число");
                                         else
-                                            MessageBox.Show(test, "Это ошибка");
+                                            //MessageBox.Show(test, "Это ошибка");
+                                            oshibke += "\n\r Ошибка в столбце 'Показания 2', строка " + j + " столбец " + i + "\n\r";
                                         break;
 
                                         //расход
@@ -188,9 +176,11 @@ namespace WindowsFormsApplication1
                                         test = excelSheet.Cells[j, i].Value.ToString();
                                         isNum = double.TryParse(test, out num2);
                                         if (isNum)
-                                            MessageBox.Show(test, "Это  число");
+                                            yui = 1;
+                                            //MessageBox.Show(test, "Это  число");
                                         else
-                                            MessageBox.Show(test, "Это ошибка");
+                                            //MessageBox.Show(test, "Это ошибка");
+                                            oshibke += "\n\rОшибка в столбце 'Расход кВт*ч', строка " + j + " столбец" + i + "\n\r";
 
                                         break;
 
@@ -199,9 +189,11 @@ namespace WindowsFormsApplication1
                                         test = excelSheet.Cells[j, i].Value.ToString();
                                         isNum = double.TryParse(test, out num2);
                                         if (isNum)
-                                            MessageBox.Show(test, "Это  число");
+                                            yui = 1;
+                                            //MessageBox.Show(test, "Это  число");
                                         else
-                                            MessageBox.Show(test, "Это ошибка");
+                                            //MessageBox.Show(test, "Это ошибка");
+                                            oshibke += "\n\rОшибка в столбце 'Сумма', строка " + j + " столбец" + i + "\n\r";
 
                                         break;
 
@@ -211,9 +203,11 @@ namespace WindowsFormsApplication1
                                         test = excelSheet.Cells[j, i].Value.ToString();
                                         isNum = DateTime.TryParse(test, out date);
                                         if (isNum)
-                                            MessageBox.Show(test, "Это  дата");
+                                            yui = 1;
+                                            //MessageBox.Show(test, "Это дата");
                                         else
-                                            MessageBox.Show(test, "Это ошибка");
+                                            //MessageBox.Show(test, "Это ошибка");
+                                            oshibke += "\n\rОшибка в столбце 'Дата', строка " + j + " столбец " + i + "\n\r";
 
                                         break;
 
@@ -226,6 +220,7 @@ namespace WindowsFormsApplication1
                             }
                             else
                             {
+                                oshibke += "\n\rОшибка в строке " + j + " столбец " + i +  " Отсутствует значение" + "\n\r";
                                 //MessageBox.Show(Convert.ToString(count_i - 1));
                                 break;
                             }
@@ -242,11 +237,15 @@ namespace WindowsFormsApplication1
                 }
                 finally
                 {
-                    workbookb.SaveAs(way + @"\2.xlsx" );
+                    //workbookb.SaveAs(way + @"\2.xlsx" );
                     workbookb.Close();
                 }
+                if (oshibke == "")
+                {
+                    oshibke = "Ошибок не обнаружено";
+                }
 
-
+                textBox2.Text += "\n\r" + oshibke + "\r\n";
 
 
             }
