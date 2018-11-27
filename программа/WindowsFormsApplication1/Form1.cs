@@ -26,21 +26,20 @@ namespace WindowsFormsApplication1
         {
             string oshibke = "";
             int yui= 1;
-            FolderBrowserDialog FBD = new FolderBrowserDialog();
-            FBD.ShowNewFolderButton = false;
-            if (FBD.ShowDialog() == DialogResult.OK)
-            {
-                way = FBD.SelectedPath;
-            }
-            DirectoryInfo dir = new DirectoryInfo(way);
-            //textBox2.Text += "\n\r" + way + "\r\n";
-            string t = "*.xlsx";
-            FileInfo[] Files = dir.GetFiles(t, SearchOption.TopDirectoryOnly);
-           
+            //FolderBrowserDialog FBD = new FolderBrowserDialog();
+            //FBD.ShowNewFolderButton = false;
+            //if (FBD.ShowDialog() == DialogResult.OK)
+            //{
+            //    way = FBD.SelectedPath;
+            //}
+            //DirectoryInfo dir = new DirectoryInfo(way);
+            ////textBox2.Text += "\n\r" + way + "\r\n";
+            //string t = "*.xlsx";
+            //FileInfo[] Files = dir.GetFiles(t, SearchOption.TopDirectoryOnly);
+            FileInfo[] Files = Failname();
             foreach (FileInfo fail in Files)
             {
                 textBox2.Text += "\n\r" + fail.Name + "\r\n";
-               
             }
             foreach (FileInfo fail in Files)
             {
@@ -89,9 +88,7 @@ namespace WindowsFormsApplication1
                                     //номер
                                     case 1:
                                         string test = excelSheet.Cells[j, i].Value.ToString();
-                                        int num;
-                                        bool isNum = int.TryParse(test, out num);
-                                        if (isNum)
+                                        if (chislo(test)==true)
                                             //MessageBox.Show(test, "Это число");
                                             yui = 1;
                                         else
@@ -102,8 +99,8 @@ namespace WindowsFormsApplication1
                                         //ФИО
                                     case 2:
                                         test = excelSheet.Cells[j, i].Value.ToString();
-                                       
-                                         isNum = int.TryParse(test, out num);
+                                        int num;
+                                         bool isNum = int.TryParse(test, out num);
                                         if (isNum ==false)
                                             //MessageBox.Show(test, "Это строка"); 
                                             yui = 1;
@@ -146,9 +143,7 @@ namespace WindowsFormsApplication1
                                         //MatchCollection mc = reg.Matches(s);
                                         //if (mc.Count > 0) return true;
                                         //return false;
-                                        double num2;
-                                        isNum = double.TryParse(test, out num2);
-                                        if (isNum)
+                                        if (Dubl(test) == true)
                                             yui = 1;
                                             //MessageBox.Show(test, "Это  число");
                                         else
@@ -158,12 +153,8 @@ namespace WindowsFormsApplication1
 
                                     //показания 2
                                     case 6:
-                                    
                                         test = excelSheet.Cells[j, i].Value.ToString();
-                                       
-                                       
-                                        isNum = double.TryParse(test, out num2);
-                                        if (isNum)
+                                        if (Dubl(test) == true)
                                             yui = 1;
                                             //MessageBox.Show(test, "Это  число");
                                         else
@@ -174,8 +165,8 @@ namespace WindowsFormsApplication1
                                         //расход
                                     case 7:
                                         test = excelSheet.Cells[j, i].Value.ToString();
-                                        isNum = double.TryParse(test, out num2);
-                                        if (isNum)
+                                        
+                                        if (Dubl(test) == true)
                                             yui = 1;
                                             //MessageBox.Show(test, "Это  число");
                                         else
@@ -187,8 +178,8 @@ namespace WindowsFormsApplication1
                                         //сумма
                                     case 8:
                                         test = excelSheet.Cells[j, i].Value.ToString();
-                                        isNum = double.TryParse(test, out num2);
-                                        if (isNum)
+                                        
+                                        if (Dubl(test)==true)
                                             yui = 1;
                                             //MessageBox.Show(test, "Это  число");
                                         else
@@ -199,16 +190,20 @@ namespace WindowsFormsApplication1
 
                                     //дата
                                     case 9:
-                                        DateTime date;
+                                        //DateTime date;
+                                        //test = excelSheet.Cells[j, i].Value.ToString();
+                                        //isNum = DateTime.TryParse(test, out date);
+                                        //if (isNum)
+                                        //    yui = 1;
+                                        //    //MessageBox.Show(test, "Это дата");
+                                        //else
+                                        //    //MessageBox.Show(test, "Это ошибка");
+                                        //    oshibke += "\n\rОшибка в столбце 'Дата', строка " + j + " столбец " + i + "\n\r";
                                         test = excelSheet.Cells[j, i].Value.ToString();
-                                        isNum = DateTime.TryParse(test, out date);
-                                        if (isNum)
+                                        if(Date(test)==true)
                                             yui = 1;
-                                            //MessageBox.Show(test, "Это дата");
                                         else
-                                            //MessageBox.Show(test, "Это ошибка");
-                                            oshibke += "\n\rОшибка в столбце 'Дата', строка " + j + " столбец " + i + "\n\r";
-
+                                            oshibke += "\n\rОшибка в столбце 'Дата', строка " + j + " столбец " + i + "\n\r"; ;
                                         break;
 
 
@@ -251,6 +246,50 @@ namespace WindowsFormsApplication1
             }
         }
 
-        
+        public FileInfo[] Failname()
+        {
+            FolderBrowserDialog FBD = new FolderBrowserDialog();
+            FBD.ShowNewFolderButton = false;
+            if (FBD.ShowDialog() == DialogResult.OK)
+            {
+                way = FBD.SelectedPath;
+            }
+            DirectoryInfo dir = new DirectoryInfo(way);
+            //textBox2.Text += "\n\r" + way + "\r\n";
+            string t = "*.xlsx";
+            FileInfo[] Files = dir.GetFiles(t, SearchOption.TopDirectoryOnly);
+            return Files;
+            
+
+        }
+        public bool Date(string test)
+        {
+            DateTime date;
+            bool isNum = DateTime.TryParse(test, out date);
+            if (isNum)
+                return true;
+            else
+                return false;
+        }
+
+        public bool chislo(string test)
+        {
+            int num;
+            bool isNum = int.TryParse(test, out num);
+            if (isNum)
+                return true;
+            else
+                return false;
+        }
+
+        public bool Dubl(string test)
+        {
+            double num;
+            bool isNum = double.TryParse(test, out num);
+            if (isNum)
+                return true;
+            else
+                return false;
+        }
     }
 }
