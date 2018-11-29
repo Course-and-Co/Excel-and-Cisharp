@@ -9,33 +9,47 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Excel;
+using Столбец;
+
 
 using System.IO;
 using System.Text.RegularExpressions;
 
 namespace WindowsFormsApplication1
 {
+    
+
     public partial class Form1 : Form
     {
+        
         public Form1()
         {
             InitializeComponent();
+
+            
         }
         string way = "";
-        
 
+
+        
+        Workbook workbookb;
         private void button2_Click(object sender, EventArgs e)
         {
-            
-            
-                FileInfo[] Files = Failname();
+            //Form2 f = new Form2();
+            //f.ShowDialog();
+            //string t = f.Data;
+
+            FileInfo[] Files = Failname();
                 foreach (FileInfo fail in Files)
                 {
 
                     Excel.Application excel = new Excel.Application();
-                    Workbook workbookb = excel.Workbooks.Open(way + @"\" + fail.Name);
+                    
+                    
+                    
                     try
                     {
+                        workbookb = excel.Workbooks.Open(way + @"\" + fail.Name);
                         string oshibke = "";
                         int yui = 1;
 
@@ -264,23 +278,42 @@ namespace WindowsFormsApplication1
 
                             }
                         }
-                        //сделать проверку на существлование папки для сохранения файлов
+
+
+                    //сделать проверку на существлование папки для сохранения файлов
+
+                        string put= way + @"\Правильно\" + Path.GetFileNameWithoutExtension(fail.Name);
+                        string putosh = way + @"\Ошибки\" + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx";
                         if (oshibke == "")
                         {
                             oshibke = "\n\r Ошибок не обнаружено";
-                            workbookb.SaveAs(way + @"\Правильно\" + Path.GetFileNameWithoutExtension(fail.Name));
+                        if (Directory.Exists(put))
+                        {
+                            workbookb.SaveAs(put);
+                           
                         }
                         else
                         {
-
-                            workbookb.SaveAs(way + @"\Ошибки\" + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx");
-
+                            DirectoryInfo di = Directory.CreateDirectory(put);
+                            workbookb.SaveAs(put);
                         }
+                        
+                        }
+                        else
+                        {
+                        if (Directory.Exists(putosh))
+                        {
+                            workbookb.SaveAs(putosh);
+                        }
+                        else
+                        {
+                            DirectoryInfo di = Directory.CreateDirectory(putosh);
+                            workbookb.SaveAs(putosh);
+                        }
+
+                    }
                         textBox2.Text += "\n\r" + oshibke + "\r\n";
                         textBox2.Text += "\n\r";
-
-
-
                     }
                     catch (Exception error)
                     {
@@ -314,7 +347,7 @@ namespace WindowsFormsApplication1
             {
 
                 way = @"C:";
-                MessageBox.Show("ошибка и указан путь ");
+                MessageBox.Show("ошибка не указан путь ");
 
             }
             DirectoryInfo dir = new DirectoryInfo(way);

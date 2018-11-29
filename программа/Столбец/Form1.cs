@@ -8,15 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Выбор_типа_столбца
+namespace Столбец
 {
-    public partial class Form1 : Form
+    public partial class Form2 : Form
     {
-        public Form1()
+        public Form2()
         {
             InitializeComponent();
         }
-
+        public string Data
+        {
+            get
+            {
+                return comboBox1.Text;
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
 

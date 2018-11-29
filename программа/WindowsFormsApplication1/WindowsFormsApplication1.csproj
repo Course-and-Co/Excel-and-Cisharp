@@ -109,9 +109,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Выбор типа столбца\Выбор типа столбца.csproj">
-      <Project>{20b61a6e-8b11-4e64-96e0-2ea35c2c0a2e}</Project>
-      <Name>Выбор типа столбца</Name>
+    <ProjectReference Include="..\Столбец\Столбец.csproj">
+      <Project>{b4c73602-3647-4aea-b588-aedc87a7fde8}</Project>
+      <Name>Столбец</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
