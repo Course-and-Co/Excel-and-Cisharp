@@ -42,8 +42,10 @@ namespace WindowsFormsApplication1
                         Worksheet excelSheet = workbookb.ActiveSheet;
 
                         textBox2.Text += "\n\r" + fail.Name + "\n\r";
-                        int count_i = 1;//кол-во столбцов
-                        int count_j = 1;//кол-во строк
+                        int count_i = 1;
+                        int count_j = 1;
+
+                    //строки
                         while (true)
                         {
                             if (excelSheet.Cells[count_i, 1].Value != null)
@@ -56,7 +58,7 @@ namespace WindowsFormsApplication1
                                 break;
                             }
                         }
-
+                        //столбцы
                         while (true)
                         {
                             if (excelSheet.Cells[1, count_j].Value != null)
@@ -69,6 +71,11 @@ namespace WindowsFormsApplication1
                                 break;
                             }
                         }
+
+
+                        //возможно сделать выбор типа столбца
+
+
                         for (int j = 1; j <= count_j - 1; j++)
                         {
                             for (int i = 2; i <= count_i - 1; i++)
@@ -257,7 +264,7 @@ namespace WindowsFormsApplication1
 
                             }
                         }
-
+                        //сделать проверку на существлование папки для сохранения файлов
                         if (oshibke == "")
                         {
                             oshibke = "\n\r Ошибок не обнаружено";
