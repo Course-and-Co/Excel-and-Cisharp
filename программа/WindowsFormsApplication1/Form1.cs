@@ -96,6 +96,9 @@ namespace WindowsFormsApplication1
                             {
                                 if (excelSheet.Cells[i, j].Value != null)
                                 {
+                                    double [] pokaz1= new double [count_i-1];
+                                    double [] pokaz2 = new double[count_i - 1];
+                                    double [] rezult = new double[count_i - 1];
                                     string test = excelSheet.Cells[i, j].Value.ToString();
                                     switch (j)
                                     {
@@ -180,9 +183,17 @@ namespace WindowsFormsApplication1
                                             test = excelSheet.Cells[i, j].Value.ToString();
                                             if (Dubl(test) == true)
                                             {
-                                                yui = 1;
-                                                //MessageBox.Show(test, "Это  число");
+                                                pokaz1[i] =Convert.ToDouble(test);
+                                            if (pokaz1[i] > 0)
+                                            {
+
                                             }
+                                            else
+                                            {
+                                                oshibke += "\n\r Ошибка в столбце 'Показания 1', строка " + j + " столбец " + i + " неверное значение\n\r";
+                                            }
+                                            //MessageBox.Show(test, "Это  число");
+                                        }
 
                                             else
                                             {
@@ -192,14 +203,22 @@ namespace WindowsFormsApplication1
 
                                             break;
 
-                                        //показания 2
+                                        //показания 2(старые)
                                         case 6:
                                             test = excelSheet.Cells[i, j].Value.ToString();
                                             if (Dubl(test) == true)
                                             {
-                                                yui = 1;
-                                                //MessageBox.Show(test, "Это  число");
+                                            pokaz2[i] = Convert.ToDouble(test);
+                                            if (pokaz2[i] > 0 || pokaz1[i]>pokaz2[i])
+                                            {
+
                                             }
+                                            else
+                                            {
+                                                oshibke += "\n\r Ошибка в столбце 'Показания 2', строка " + j + " столбец " + i + " неверное значение\n\r";
+                                            }
+                                            //MessageBox.Show(test, "Это  число");
+                                        }
                                             else
                                             {
                                                 //MessageBox.Show(test, "Это ошибка");
@@ -213,7 +232,15 @@ namespace WindowsFormsApplication1
 
                                             if (Dubl(test) == true)
                                             {
-                                                yui = 1;
+                                            rezult[i] = Convert.ToDouble(test);
+                                            if (rezult[i] > 0)
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                                oshibke += "\n\r Ошибка в столбце 'Расход кВт*ч', строка " + j + " столбец " + i + " неверное значение\n\r";
+                                            }
                                                 //MessageBox.Show(test, "Это  число");
                                             }
 
