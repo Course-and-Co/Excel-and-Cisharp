@@ -96,9 +96,9 @@ namespace WindowsFormsApplication1
                             {
                                 if (excelSheet.Cells[i, j].Value != null)
                                 {
-                                    double [] pokaz1= new double [count_i-1];
-                                    double [] pokaz2 = new double[count_i - 1];
-                                    double [] rezult = new double[count_i - 1];
+                                    double [] pokaz1= new double [count_i];
+                                    double [] pokaz2 = new double[count_i];
+                                    double [] rezult = new double[count_i];
                                     string test = excelSheet.Cells[i, j].Value.ToString();
                                     switch (j)
                                     {
@@ -309,20 +309,20 @@ namespace WindowsFormsApplication1
 
                     //сделать проверку на существлование папки для сохранения файлов
 
-                        string put= way + @"\Правильно\" + Path.GetFileNameWithoutExtension(fail.Name);
-                        string putosh = way + @"\Ошибки\" + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx";
+                    string put = way + @"\Правильно\";//+ Path.GetFileNameWithoutExtension(fail.Name);
+                    string putosh = way + @"\Ошибки\";// + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx";
                         if (oshibke == "")
                         {
                             oshibke = "\n\r Ошибок не обнаружено";
                         if (Directory.Exists(put))
                         {
-                            workbookb.SaveAs(put);
+                            workbookb.SaveAs(put + Path.GetFileNameWithoutExtension(fail.Name));
                            
                         }
                         else
                         {
                             DirectoryInfo di = Directory.CreateDirectory(put);
-                            workbookb.SaveAs(put);
+                            workbookb.SaveAs(put + Path.GetFileNameWithoutExtension(fail.Name));
                         }
                         
                         }
@@ -330,12 +330,12 @@ namespace WindowsFormsApplication1
                         {
                         if (Directory.Exists(putosh))
                         {
-                            workbookb.SaveAs(putosh);
+                            workbookb.SaveAs(putosh + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx");
                         }
                         else
                         {
                             DirectoryInfo di = Directory.CreateDirectory(putosh);
-                            workbookb.SaveAs(putosh);
+                            workbookb.SaveAs(putosh + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx");
                         }
 
                     }
@@ -378,7 +378,8 @@ namespace WindowsFormsApplication1
 
             }
             DirectoryInfo dir = new DirectoryInfo(way);
-            string t = " *.xlsx";
+
+            string t = "*.xlsx";
             Files = dir.GetFiles(t, SearchOption.TopDirectoryOnly);
             return Files;
 
