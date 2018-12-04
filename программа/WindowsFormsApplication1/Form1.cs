@@ -38,7 +38,7 @@ namespace WindowsFormsApplication1
                 if( fail.Name[0] == '~')
                 {
 
-                MessageBox.Show("Обнаружен открытый процесс! После работы рекомендуется закрыть все процессы MS EXCEL ");
+                MessageBox.Show("Обнаружен открытый процесс! После работы рекомендуется закрыть все процессы MS EXCEL ");//ошибка возникает из за прерваной работы програмы
             }
             else
                 {
@@ -46,17 +46,15 @@ namespace WindowsFormsApplication1
 
                     try
                     {
-                        workbookb = excel.Workbooks.Open(way + @"\" + fail.Name);
+                        workbookb = excel.Workbooks.Open(way + @"\" + fail.Name);//открытие  файла
                         string oshibke = "";
-                        int yui = 1;
-
                         Worksheet excelSheet = workbookb.ActiveSheet;
 
-                        textBox2.Text += "\n\r" + fail.Name + "\n\r";
+                        textBox2.Text += "\n\r" + fail.Name + "\n\r";//вывод имени файла
                         int count_i = 1;
                         int count_j = 1;
 
-                        //строки
+                        //кол-во строк
                         while (true)
                         {
                             if (excelSheet.Cells[count_i, 1].Value != null)
@@ -64,7 +62,7 @@ namespace WindowsFormsApplication1
                             else
                                 break;
                         }
-                        //столбцы
+                        //кол-во столбцов
                         while (true)
                         {
                             if (excelSheet.Cells[1, count_j].Value != null)
@@ -83,12 +81,12 @@ namespace WindowsFormsApplication1
                             {
                                 if (excelSheet.Cells[i, j].Value != null)
                                 {
-                                    string FIO = @"[А-Я|а-я]{2,}\ [А-Я|а-я]{2,}\ [А-Я|а-я]{2,}";
-                                    string adres = @"г\.[А-Я|а-я]{2,}\, ул\.[А-Я|а-я]{2,}\, [0-9]{1,4}";
+                                    string FIO = @"[А-Я|а-я]{2,}\ [А-Я|а-я]{2,}\ [А-Я|а-я]{2,}";//формула для проверки правильности ФИО
+                                    string adres = @"г\.[А-Я|а-я]{2,}\, ул\.[А-Я|а-я]{2,}\, [0-9]{1,4}";//Формула для проверки правельности адреса
                                     double[] pokaz1 = new double[count_i];
                                     double[] pokaz2 = new double[count_i];
                                     double[] rezult = new double[count_i];
-                                    string test = excelSheet.Cells[i, j].Value.ToString();
+                                    string test = excelSheet.Cells[i, j].Value.ToString();//значение ячейки
                                     switch (j)
                                     {
 
@@ -100,7 +98,7 @@ namespace WindowsFormsApplication1
                                             else
                                             {
                                                 oshibke += "\n\r Ошибка в столбце '№', строка " +
-                                                    j + " столбец" + i + "\n\r";
+                                                    i + " столбец" + j + "\n\r";
                                             }
 
                                             break;
@@ -114,7 +112,7 @@ namespace WindowsFormsApplication1
                                             else
                                             {
                                                 oshibke += "\n\rОшибка в столбце 'ФИО', строка " + 
-                                                    j + " столбец" + i + "\n\r";
+                                                    i + " столбец" + j + "\n\r";
                                             }
 
                                                 break;
@@ -129,7 +127,8 @@ namespace WindowsFormsApplication1
                                             }
                                             else
                                             {
-                                                oshibke += "\n\rОшибка в столбце 'Адрес', строка " + j + " столбец" + i + "\n\r";
+                                                oshibke += "\n\rОшибка в столбце 'Адрес', строка " + 
+                                                    i + " столбец" + j + "\n\r";
                                             }
 
                                             break;
@@ -143,7 +142,8 @@ namespace WindowsFormsApplication1
                                             }
                                             else
                                             {
-                                                oshibke += "\n\r Ошибка в столбце 'Назначении платежа', строка " + j + " столбец" + i + "\n\r";
+                                                oshibke += "\n\r Ошибка в столбце 'Назначении платежа', строка " +
+                                                    i + " столбец" + j + "\n\r";
                                             }
 
                                             break;
@@ -154,13 +154,14 @@ namespace WindowsFormsApplication1
                                             if (Dubl(test) == true)
                                             {
                                                 pokaz1[i] = Convert.ToDouble(test);
-                                                if (pokaz1[i] > 0)
+                                                if (pokaz1[i] > 0)//проверка на то что бы показания небыли меньше нуля 
                                                 {
 
                                                 }
                                                 else
                                                 {
-                                                    oshibke += "\n\r Ошибка в столбце 'Показания 1', строка " + j + " столбец " + i + " неверное значение\n\r";
+                                                    oshibke += "\n\r Ошибка в столбце 'Показания 1', строка " + 
+                                                        i + " столбец " + j + " неверное значение\n\r";
                                                 }
                                                 //MessageBox.Show(test, "Это  число");
                                             }
@@ -168,7 +169,8 @@ namespace WindowsFormsApplication1
                                             else
                                             {
                                                 //MessageBox.Show(test, "Это ошибка");
-                                                oshibke += "\n\r Ошибка в столбце 'Показания 1', строка " + j + " столбец " + i + "\n\r";
+                                                oshibke += "\n\r Ошибка в столбце 'Показания 1', строка " +
+                                                    i + " столбец " + j + "\n\r";
                                             }
 
                                             break;
@@ -179,20 +181,23 @@ namespace WindowsFormsApplication1
                                             if (Dubl(test) == true)
                                             {
                                                 pokaz2[i] = Convert.ToDouble(test);
-                                                if (pokaz2[i] > 0 || pokaz1[i] > pokaz2[i])
+                                                if (pokaz2[i] > 0 && pokaz1[i] > pokaz2[i])//проверка на то что бы показания небыли меньше нуля 
+                                                                                           //и старые показания не превышали новые
                                                 {
 
                                                 }
                                                 else
                                                 {
-                                                    oshibke += "\n\r Ошибка в столбце 'Показания 2', строка " + j + " столбец " + i + " неверное значение\n\r";
+                                                    oshibke += "\n\r Ошибка в столбце 'Показания 2', строка " +
+                                                        i + " столбец " + j + " неверное значение\n\r";
                                                 }
-                                                //MessageBox.Show(test, "Это  число");
+                                                
                                             }
                                             else
                                             {
-                                                //MessageBox.Show(test, "Это ошибка");
-                                                oshibke += "\n\r Ошибка в столбце 'Показания 2', строка " + j + " столбец " + i + "\n\r";
+                                                
+                                                oshibke += "\n\r Ошибка в столбце 'Показания 2', строка " + 
+                                                    i + " столбец " + j + "\n\r";
                                             }
                                             break;
 
@@ -209,7 +214,8 @@ namespace WindowsFormsApplication1
                                                 }
                                                 else
                                                 {
-                                                    oshibke += "\n\r Ошибка в столбце 'Расход кВт*ч', строка " + j + " столбец " + i + " неверное значение\n\r";
+                                                    oshibke += "\n\r Ошибка в столбце 'Расход кВт*ч', строка " +
+                                                        i + " столбец " + j + " неверное значение\n\r";
                                                 }
                                                 //MessageBox.Show(test, "Это  число");
                                             }
@@ -217,7 +223,8 @@ namespace WindowsFormsApplication1
                                             else
                                             {
                                                 //MessageBox.Show(test, "Это ошибка");
-                                                oshibke += "\n\rОшибка в столбце 'Расход кВт*ч', строка " + j + " столбец" + i + "\n\r";
+                                                oshibke += "\n\rОшибка в столбце 'Расход кВт*ч', строка " +
+                                                    i + " столбец" + j + "\n\r";
                                             }
 
 
@@ -229,14 +236,13 @@ namespace WindowsFormsApplication1
 
                                             if (Dubl(test) == true)
                                             {
-                                                yui = 1;
-                                                //MessageBox.Show(test, "Это  число");
                                             }
 
                                             else
                                             {
-                                                //MessageBox.Show(test, "Это ошибка");
-                                                oshibke += "\n\rОшибка в столбце 'Сумма', строка " + j + " столбец" + i + "\n\r";
+                                                
+                                                oshibke += "\n\rОшибка в столбце 'Сумма', строка " +
+                                                    i + " столбец" + j + "\n\r";
                                             }
 
 
@@ -247,14 +253,12 @@ namespace WindowsFormsApplication1
                                             test = excelSheet.Cells[i, j].Value.ToString();
                                             if (Date(test) == true)
                                             {
-                                                //MessageBox.Show(test, "Это  число");
-                                                yui = 1;
                                             }
-
                                             else
                                             {
-                                                //MessageBox.Show(test, "Это ошибка");
-                                                oshibke += "\n\rОшибка в столбце 'Дата', строка " + j + " столбец " + i + "\n\r"; ;
+                                                
+                                                oshibke += "\n\rОшибка в столбце 'Дата', строка " +
+                                                    i + " столбец " + j + "\n\r"; ;
                                             }
 
                                             break;
@@ -269,8 +273,9 @@ namespace WindowsFormsApplication1
                                 }
                                 else
                                 {
-                                    oshibke += "\n\rОшибка в строке " + j + " столбец " + i + " Отсутствует значение" + "\n\r";
-                                    //MessageBox.Show("Это ошибка");
+                                    oshibke += "\n\rОшибка в строке " + i + " столбец " +
+                                        j + " Отсутствует значение" + "\n\r";
+                                   
                                     break;
                                 }
 
@@ -281,46 +286,45 @@ namespace WindowsFormsApplication1
 
                         string put = way + @"\Правильно\";
                         string putosh = way + @"\Ошибки\";
-                        if (oshibke == "")
+                        if (oshibke == "")//проверка на точность файла
                         {
                             oshibke = "\n\r Ошибок не обнаружено";
-                            if (Directory.Exists(put))
+                            textBox2.Text += "\n\r" + oshibke + "\r\n";
+                            textBox2.Text += "\n\r";
+                            if (Directory.Exists(put))//проверка на существование папки
                             {
-                                 
-                                    workbookb.SaveAs(put + Path.GetFileNameWithoutExtension(fail.Name));
-                                    
+                                    workbookb.SaveAs(put + Path.GetFileNameWithoutExtension(fail.Name));//сохранение провереного файла в папку
                             }
                             else
                             {
-                                DirectoryInfo di = Directory.CreateDirectory(put);
-                                workbookb.SaveAs(put + Path.GetFileNameWithoutExtension(fail.Name));
+                                DirectoryInfo di = Directory.CreateDirectory(put);//создание папки
+                                workbookb.SaveAs(put + Path.GetFileNameWithoutExtension(fail.Name));//сохранение провереного файла в папку
                             }
-
                         }
                         else
                         {
-                            if (Directory.Exists(putosh))
+                            textBox2.Text += "\n\r" + oshibke + "\r\n";
+                            textBox2.Text += "\n\r";
+                            if (Directory.Exists(putosh))//проверка на существование папки
                             {
                                
-                                workbookb.SaveAs(putosh + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx");
+                                workbookb.SaveAs(putosh + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx");//сохранение провереного файла в папку
                             }
                             else
                             {
-                                DirectoryInfo di = Directory.CreateDirectory(putosh);
-                                workbookb.SaveAs(putosh + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx");
+                                DirectoryInfo di = Directory.CreateDirectory(putosh);//создание папки
+                                workbookb.SaveAs(putosh + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx");//сохранение провереного файла в папку
                             }
 
                         }
-                        textBox2.Text += "\n\r" + oshibke + "\r\n";
-                        textBox2.Text += "\n\r";
+                        
                     }
-                    catch (Exception error)
+                    catch (Exception)
                     {
-                        MessageBox.Show("ошибка " + error);
+                        MessageBox.Show("Предупреждение! Вы не сохранили провереный файл!" );//исключение при отказе от перезаписи файлов
                     }
                     finally
                     {
-
                         workbookb.Close();
                     }
                     }
@@ -330,6 +334,7 @@ namespace WindowsFormsApplication1
             }
         }
 
+        //функция для выбора пути к файлам
         public FileInfo[] Failname()
         {
             FileInfo[] Files;
@@ -355,6 +360,8 @@ namespace WindowsFormsApplication1
 
            
         }
+
+        //функция для определения даты
         public bool Date(string test)
         {
             DateTime date;
@@ -366,7 +373,7 @@ namespace WindowsFormsApplication1
         }
 
 
-     
+     //функция для определения целого числа
         public bool chislo(string test)
         {
             int num;
@@ -377,6 +384,7 @@ namespace WindowsFormsApplication1
                 return false;
         }
 
+        //функция для определения числа с запятой
         public bool Dubl(string test)
         {
             double num;
