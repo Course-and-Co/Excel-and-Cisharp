@@ -73,7 +73,7 @@ namespace WindowsFormsApplication1
 
 
 
-
+                        
 
                         for (int j = 1; j <= count_j - 1; j++)
                         {
@@ -81,12 +81,23 @@ namespace WindowsFormsApplication1
                             {
                                 if (excelSheet.Cells[i, j].Value != null)
                                 {
+                                    
                                     string FIO = @"[А-Я|а-я]{2,}\ [А-Я|а-я]{2,}\ [А-Я|а-я]{2,}";//формула для проверки правильности ФИО
                                     string adres = @"г\.[А-Я|а-я]{2,}\, ул\.[А-Я|а-я]{2,}\, [0-9]{1,4}";//Формула для проверки правельности адреса
                                     double[] pokaz1 = new double[count_i];
                                     double[] pokaz2 = new double[count_i];
                                     double[] rezult = new double[count_i];
                                     string test = excelSheet.Cells[i, j].Value.ToString();//значение ячейки
+
+
+
+                                    int oleColor = ColorTranslator.ToOle(Color.Red);
+                                    var columnHeadingsRange = excelSheet.Range["A1","A4"];
+                                    columnHeadingsRange.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red); ;
+                                    
+
+
+
                                     switch (j)
                                     {
 
@@ -319,9 +330,9 @@ namespace WindowsFormsApplication1
                         }
                         
                     }
-                    catch (Exception)
+                    catch (Exception erra)
                     {
-                        MessageBox.Show("Предупреждение! Вы не сохранили провереный файл!" );//исключение при отказе от перезаписи файлов
+                        MessageBox.Show("Предупреждение! Вы не сохранили провереный файл!   "+ erra );//исключение при отказе от перезаписи файлов
                     }
                     finally
                     {
