@@ -32,13 +32,18 @@ namespace WindowsFormsApplication1
         Workbook workbookb;
         private void button2_Click(object sender, EventArgs e)
         {
-            FileInfo[] Files = Failname();
+
+            DirectoryInfo dir = Failname();
+            FileInfo[] Files = Failexcel(dir);
+
+
             foreach (FileInfo fail in Files)
             {
                 if( fail.Name[0] == '~')
                 {
 
-                MessageBox.Show("Обнаружен открытый процесс! После работы рекомендуется закрыть все процессы MS EXCEL ");//ошибка возникает из за прерваной работы програмы
+                MessageBox.Show("Обнаружен открытый процесс!"+
+                    " После работы рекомендуется закрыть все процессы MS EXCEL ");//ошибка возникает из за прерваной работы програмы
             }
             else
                 {
@@ -95,8 +100,6 @@ namespace WindowsFormsApplication1
                                     var columnHeadingsRange = excelSheet.Range["A1","A4"];
                                     columnHeadingsRange.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red); ;
                                     
-
-
 
                                     switch (j)
                                     {
@@ -346,9 +349,9 @@ namespace WindowsFormsApplication1
         }
 
         //функция для выбора пути к файлам
-        public FileInfo[] Failname()
+        public DirectoryInfo Failname()
         {
-            FileInfo[] Files;
+           
             FolderBrowserDialog FBD = new FolderBrowserDialog();
             FBD.ShowNewFolderButton = false;
 
@@ -364,16 +367,20 @@ namespace WindowsFormsApplication1
 
             }
             DirectoryInfo dir = new DirectoryInfo(way);
+            return dir;
 
+            
+        }
+
+        public FileInfo[] Failexcel(DirectoryInfo dir)
+        {
+            FileInfo[] Files;
             string t = "*.xls*";
             Files = dir.GetFiles(t, SearchOption.TopDirectoryOnly);
             return Files;
-
-           
         }
-
-        //функция для определения даты
-        public bool Date(string test)
+            //функция для определения даты
+            public bool Date(string test)
         {
             DateTime date;
             bool isNum = DateTime.TryParse(test, out date);
