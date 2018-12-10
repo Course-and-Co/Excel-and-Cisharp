@@ -112,7 +112,7 @@ namespace WindowsFormsApplication1
                                             else
                                             {
                                                 oshibke += "\n\r Ошибка в столбце '№', строка " +
-                                                    i + " столбец" + j + "\n\r";
+                                                    i + " столбец " + j + "\n\r";
                                             }
 
                                             break;
@@ -126,7 +126,7 @@ namespace WindowsFormsApplication1
                                             else
                                             {
                                                 oshibke += "\n\rОшибка в столбце 'ФИО', строка " + 
-                                                    i + " столбец" + j + "\n\r";
+                                                    i + " столбец " + j + "\n\r";
                                             }
 
                                                 break;
@@ -142,7 +142,7 @@ namespace WindowsFormsApplication1
                                             else
                                             {
                                                 oshibke += "\n\rОшибка в столбце 'Адрес', строка " + 
-                                                    i + " столбец" + j + "\n\r";
+                                                    i + " столбец " + j + "\n\r";
                                             }
 
                                             break;
@@ -157,7 +157,7 @@ namespace WindowsFormsApplication1
                                             else
                                             {
                                                 oshibke += "\n\r Ошибка в столбце 'Назначении платежа', строка " +
-                                                    i + " столбец" + j + "\n\r";
+                                                    i + " столбец " + j + "\n\r";
                                             }
 
                                             break;
@@ -238,7 +238,7 @@ namespace WindowsFormsApplication1
                                             {
                                                 //MessageBox.Show(test, "Это ошибка");
                                                 oshibke += "\n\rОшибка в столбце 'Расход кВт*ч', строка " +
-                                                    i + " столбец" + j + "\n\r";
+                                                    i + " столбец " + j + "\n\r";
                                             }
 
 
@@ -288,7 +288,7 @@ namespace WindowsFormsApplication1
                                 else
                                 {
                                     oshibke += "\n\rОшибка в строке " + i + " столбец " +
-                                        j + " Отсутствует значение" + "\n\r";
+                                        j + " Отсутствует значение " + "\n\r";
                                    
                                     break;
                                 }
@@ -335,7 +335,7 @@ namespace WindowsFormsApplication1
                     }
                     catch (Exception erra)
                     {
-                        MessageBox.Show("Предупреждение! Вы не сохранили провереный файл!   "+ erra );//исключение при отказе от перезаписи файлов
+                        MessageBox.Show("Предупреждение!   "+ erra );//исключение при отказе от перезаписи файлов
                     }
                     finally
                     {
@@ -411,6 +411,11 @@ namespace WindowsFormsApplication1
                 return true;
             else
                 return false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
