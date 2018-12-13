@@ -419,7 +419,8 @@ namespace WindowsFormsApplication1
             //функция для определения даты
             public bool Date(string znachcells)
         {
-            bool isNum = DateTime.TryParse(znachcells, out DateTime date);
+            DateTime date;
+            bool isNum = DateTime.TryParse(znachcells, out date);
             if (isNum)
                 return true;
             else
@@ -430,7 +431,8 @@ namespace WindowsFormsApplication1
      //функция для определения целого числа
         public bool chislo(string znachcells)
         {
-            bool isNum = int.TryParse(znachcells, out int num);
+            int num;
+            bool isNum = int.TryParse(znachcells, out num);
             if (isNum)
                 return true;
             else
@@ -440,7 +442,8 @@ namespace WindowsFormsApplication1
         //функция для определения числа с запятой
         public bool Dubl(string znachcells)
         {
-            bool isNum = double.TryParse(znachcells, out double num);
+            double num;
+            bool isNum = double.TryParse(znachcells, out num);
             if (isNum)
                 return true;
             else
