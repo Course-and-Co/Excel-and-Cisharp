@@ -32,13 +32,25 @@ namespace WindowsFormsApplication1
         Workbook workbookb;
         private void button2_Click(object sender, EventArgs e)
         {
-            FileInfo[] Files = Failname();
+
+            DirectoryInfo direct = Failname();
+            FileInfo[] Files = Failexcel(direct);
+
+            int proc = 0;
             foreach (FileInfo fail in Files)
             {
                 if( fail.Name[0] == '~')
                 {
+                    if (proc == 0)
+                    {
+                        MessageBox.Show("Обнаружен открытый процесс!" +
+                    " После работы рекомендуется закрыть все процессы MS EXCEL ");//ошибка возникает из за прерваной работы програмы
+                    }
+                    else
+                    {
 
-                MessageBox.Show("Обнаружен открытый процесс! После работы рекомендуется закрыть все процессы MS EXCEL ");//ошибка возникает из за прерваной работы програмы
+                    }
+                
             }
             else
                 {
@@ -73,6 +85,15 @@ namespace WindowsFormsApplication1
 
 
 
+                        string FIO = @"[А-Я|а-я]{2,}\ [А-Я|а-я]{2,}\ [А-Я|а-я]{2,}";//формула для проверки правильности ФИО
+                        string adres = @"г\.[А-Я|а-я]{2,}\, ул\.[А-Я|а-я]{2,}\, [0-9]{1,4}";//Формула для проверки правельности адреса
+                        double[] pokaz1 = new double[count_i];
+                        double[] pokaz2 = new double[count_i];
+                        double[] rezult = new double[count_i];
+
+                        int oleColor = ColorTranslator.ToOle(Color.Red);
+                        var selectCelss = excelSheet.Cells[1, 1];
+                        
 
 
                         for (int j = 1; j <= count_j - 1; j++)
@@ -81,38 +102,41 @@ namespace WindowsFormsApplication1
                             {
                                 if (excelSheet.Cells[i, j].Value != null)
                                 {
-                                    string FIO = @"[А-Я|а-я]{2,}\ [А-Я|а-я]{2,}\ [А-Я|а-я]{2,}";//формула для проверки правильности ФИО
-                                    string adres = @"г\.[А-Я|а-я]{2,}\, ул\.[А-Я|а-я]{2,}\, [0-9]{1,4}";//Формула для проверки правельности адреса
-                                    double[] pokaz1 = new double[count_i];
-                                    double[] pokaz2 = new double[count_i];
-                                    double[] rezult = new double[count_i];
-                                    string test = excelSheet.Cells[i, j].Value.ToString();//значение ячейки
+                                    
+                                   
+                                    string znachcells = excelSheet.Cells[i, j].Value.ToString();//значение ячейки
+
+
                                     switch (j)
                                     {
 
                                         //номер
                                         case 1:
-                                            if (chislo(test) == true)
+                                            if (chislo(znachcells) == true)
                                             {
                                             }
                                             else
                                             {
                                                 oshibke += "\n\r Ошибка в столбце '№', строка " +
-                                                    i + " столбец" + j + "\n\r";
+                                                    i + " столбец " + j + "\n\r";
+                                                selectCelss = excelSheet.Cells[i, j];
+                                                selectCelss.Interior.Color = oleColor;
                                             }
 
                                             break;
 
                                         //ФИО
                                         case 2:
-                                            test = excelSheet.Cells[i, j].Value.ToString();
-                                            if (Regex.IsMatch(test, FIO, RegexOptions.IgnoreCase))
+                                            znachcells = excelSheet.Cells[i, j].Value.ToString();
+                                            if (Regex.IsMatch(znachcells, FIO))
                                             {
                                             }
                                             else
                                             {
                                                 oshibke += "\n\rОшибка в столбце 'ФИО', строка " + 
-                                                    i + " столбец" + j + "\n\r";
+                                                    i + " столбец " + j + "\n\r";
+                                                selectCelss = excelSheet.Cells[i, j];
+                                                selectCelss.Interior.Color = oleColor;
                                             }
 
                                                 break;
@@ -120,40 +144,44 @@ namespace WindowsFormsApplication1
 
                                             //адрес
                                             case 3:
-                                                test = excelSheet.Cells[i, j].Value.ToString();
+                                                znachcells = excelSheet.Cells[i, j].Value.ToString();
 
-                                            if (Regex.IsMatch(test, adres))
+                                            if (Regex.IsMatch(znachcells, adres))
                                             {
                                             }
                                             else
                                             {
                                                 oshibke += "\n\rОшибка в столбце 'Адрес', строка " + 
-                                                    i + " столбец" + j + "\n\r";
+                                                    i + " столбец " + j + "\n\r";
+                                                selectCelss = excelSheet.Cells[i, j];
+                                                selectCelss.Interior.Color = oleColor;
                                             }
 
                                             break;
 
                                         //назначение 
                                         case 4:
-                                            test = excelSheet.Cells[i, j].Value.ToString();
+                                            znachcells = excelSheet.Cells[i, j].Value.ToString();
                                                 
-                                            if (test=="электроэнергия" || test == "отопление")
+                                            if (znachcells=="электроэнергия" || znachcells == "отопление")
                                             {
                                             }
                                             else
                                             {
                                                 oshibke += "\n\r Ошибка в столбце 'Назначении платежа', строка " +
-                                                    i + " столбец" + j + "\n\r";
+                                                    i + " столбец " + j + "\n\r";
+                                                selectCelss = excelSheet.Cells[i, j];
+                                                selectCelss.Interior.Color = oleColor;
                                             }
 
                                             break;
 
                                         //показания 1
                                         case 5:
-                                            test = excelSheet.Cells[i, j].Value.ToString();
-                                            if (Dubl(test) == true)
+                                            znachcells = excelSheet.Cells[i, j].Value.ToString();
+                                            if (Dubl(znachcells) == true)
                                             {
-                                                pokaz1[i] = Convert.ToDouble(test);
+                                                pokaz1[i] = Convert.ToDouble(znachcells);
                                                 if (pokaz1[i] > 0)//проверка на то что бы показания небыли меньше нуля 
                                                 {
 
@@ -162,25 +190,29 @@ namespace WindowsFormsApplication1
                                                 {
                                                     oshibke += "\n\r Ошибка в столбце 'Показания 1', строка " + 
                                                         i + " столбец " + j + " неверное значение\n\r";
+                                                    selectCelss = excelSheet.Cells[i, j];
+                                                    selectCelss.Interior.Color = oleColor;
                                                 }
-                                                //MessageBox.Show(test, "Это  число");
+                                                
                                             }
 
                                             else
                                             {
-                                                //MessageBox.Show(test, "Это ошибка");
+                                              
                                                 oshibke += "\n\r Ошибка в столбце 'Показания 1', строка " +
                                                     i + " столбец " + j + "\n\r";
+                                                selectCelss = excelSheet.Cells[i, j];
+                                                selectCelss.Interior.Color = oleColor;
                                             }
 
                                             break;
 
                                         //показания 2(старые)
                                         case 6:
-                                            test = excelSheet.Cells[i, j].Value.ToString();
-                                            if (Dubl(test) == true)
+                                            znachcells = excelSheet.Cells[i, j].Value.ToString();
+                                            if (Dubl(znachcells) == true)
                                             {
-                                                pokaz2[i] = Convert.ToDouble(test);
+                                                pokaz2[i] = Convert.ToDouble(znachcells);
                                                 if (pokaz2[i] > 0 && pokaz1[i] > pokaz2[i])//проверка на то что бы показания небыли меньше нуля 
                                                                                            //и старые показания не превышали новые
                                                 {
@@ -190,6 +222,8 @@ namespace WindowsFormsApplication1
                                                 {
                                                     oshibke += "\n\r Ошибка в столбце 'Показания 2', строка " +
                                                         i + " столбец " + j + " неверное значение\n\r";
+                                                    selectCelss = excelSheet.Cells[i, j];
+                                                    selectCelss.Interior.Color = oleColor;
                                                 }
                                                 
                                             }
@@ -198,16 +232,18 @@ namespace WindowsFormsApplication1
                                                 
                                                 oshibke += "\n\r Ошибка в столбце 'Показания 2', строка " + 
                                                     i + " столбец " + j + "\n\r";
+                                                selectCelss = excelSheet.Cells[i, j];
+                                                selectCelss.Interior.Color = oleColor;
                                             }
                                             break;
 
                                         //расход
                                         case 7:
-                                            test = excelSheet.Cells[i, j].Value.ToString();
+                                            znachcells = excelSheet.Cells[i, j].Value.ToString();
 
-                                            if (Dubl(test) == true)
+                                            if (Dubl(znachcells) == true)
                                             {
-                                                rezult[i] = Convert.ToDouble(test);
+                                                rezult[i] = Convert.ToDouble(znachcells);
                                                 if (rezult[i] > 0)
                                                 {
 
@@ -216,42 +252,42 @@ namespace WindowsFormsApplication1
                                                 {
                                                     oshibke += "\n\r Ошибка в столбце 'Расход кВт*ч', строка " +
                                                         i + " столбец " + j + " неверное значение\n\r";
+                                                    selectCelss = excelSheet.Cells[i, j];
+                                                    selectCelss.Interior.Color = oleColor;
                                                 }
-                                                //MessageBox.Show(test, "Это  число");
+                                               
                                             }
-
                                             else
                                             {
-                                                //MessageBox.Show(test, "Это ошибка");
+                                                
                                                 oshibke += "\n\rОшибка в столбце 'Расход кВт*ч', строка " +
-                                                    i + " столбец" + j + "\n\r";
+                                                    i + " столбец " + j + "\n\r";
+                                                selectCelss = excelSheet.Cells[i, j];
+                                                selectCelss.Interior.Color = oleColor;
                                             }
-
-
                                             break;
 
                                         //сумма
                                         case 8:
-                                            test = excelSheet.Cells[i, j].Value.ToString();
+                                            znachcells = excelSheet.Cells[i, j].Value.ToString();
 
-                                            if (Dubl(test) == true)
+                                            if (Dubl(znachcells) == true)
                                             {
                                             }
-
                                             else
                                             {
                                                 
                                                 oshibke += "\n\rОшибка в столбце 'Сумма', строка " +
                                                     i + " столбец" + j + "\n\r";
+                                                selectCelss = excelSheet.Cells[i, j];
+                                                selectCelss.Interior.Color = oleColor;
                                             }
-
-
                                             break;
 
                                         //дата
                                         case 9:
-                                            test = excelSheet.Cells[i, j].Value.ToString();
-                                            if (Date(test) == true)
+                                            znachcells = excelSheet.Cells[i, j].Value.ToString();
+                                            if (Date(znachcells) == true)
                                             {
                                             }
                                             else
@@ -259,6 +295,8 @@ namespace WindowsFormsApplication1
                                                 
                                                 oshibke += "\n\rОшибка в столбце 'Дата', строка " +
                                                     i + " столбец " + j + "\n\r"; ;
+                                                selectCelss = excelSheet.Cells[i, j];
+                                                selectCelss.Interior.Color = oleColor;
                                             }
 
                                             break;
@@ -266,7 +304,8 @@ namespace WindowsFormsApplication1
 
                                         default:
                                             oshibke += "\n\rОшибка \n\r"; ;
-
+                                            selectCelss = excelSheet.Cells[i, j];
+                                            selectCelss.Interior.Color = oleColor;
                                             break;
                                     }
 
@@ -274,58 +313,67 @@ namespace WindowsFormsApplication1
                                 else
                                 {
                                     oshibke += "\n\rОшибка в строке " + i + " столбец " +
-                                        j + " Отсутствует значение" + "\n\r";
-                                   
+                                        j + " Отсутствует значение " + "\n\r";
+                                    selectCelss = excelSheet.Cells[i, j];
+                                    selectCelss.Interior.Color = oleColor;
                                     break;
                                 }
 
                             }
                         }
 
-                           
 
-                        string put = way + @"\Правильно\";
-                        string putosh = way + @"\Ошибки\";
-                        if (oshibke == "")//проверка на точность файла
+                        try
                         {
-                            oshibke = "\n\r Ошибок не обнаружено";
-                            textBox2.Text += "\n\r" + oshibke + "\r\n";
-                            textBox2.Text += "\n\r";
-                            if (Directory.Exists(put))//проверка на существование папки
+                            string put = way + @"\Правильно\";
+                            string putosh = way + @"\Ошибки\";
+                            if (oshibke == "")//проверка на точность файла
                             {
+                                oshibke = "\n\r Ошибок не обнаружено";
+                                textBox2.Text += "\n\r" + oshibke + "\r\n";
+                                textBox2.Text += "\n\r";
+                                if (Directory.Exists(put))//проверка на существование папки
+                                {
                                     workbookb.SaveAs(put + Path.GetFileNameWithoutExtension(fail.Name));//сохранение провереного файла в папку
+                                }
+                                else
+                                {
+                                    DirectoryInfo dir = Directory.CreateDirectory(put);//создание папки
+                                    workbookb.SaveAs(put + Path.GetFileNameWithoutExtension(fail.Name));//сохранение провереного файла в папку
+                                }
                             }
                             else
                             {
-                                DirectoryInfo di = Directory.CreateDirectory(put);//создание папки
-                                workbookb.SaveAs(put + Path.GetFileNameWithoutExtension(fail.Name));//сохранение провереного файла в папку
-                            }
-                        }
-                        else
-                        {
-                            textBox2.Text += "\n\r" + oshibke + "\r\n";
-                            textBox2.Text += "\n\r";
-                            if (Directory.Exists(putosh))//проверка на существование папки
-                            {
-                               
-                                workbookb.SaveAs(putosh + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx");//сохранение провереного файла в папку
-                            }
-                            else
-                            {
-                                DirectoryInfo di = Directory.CreateDirectory(putosh);//создание папки
-                                workbookb.SaveAs(putosh + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx");//сохранение провереного файла в папку
-                            }
+                                textBox2.Text += "\n\r" + oshibke + "\r\n";
+                                textBox2.Text += "\n\r";
+                                if (Directory.Exists(putosh))//проверка на существование папки
+                                {
 
+                                    workbookb.SaveAs(putosh + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx");//сохранение провереного файла в папку
+                                }
+                                else
+                                {
+                                    DirectoryInfo dir = Directory.CreateDirectory(putosh);//создание папки
+                                    workbookb.SaveAs(putosh + Path.GetFileNameWithoutExtension(fail.Name) + @"_osibka.xlsx");//сохранение провереного файла в папку
+                                }
+
+                            }
                         }
-                        
+                        catch (Exception)
+                        {
+                            //MessageBox.Show("Предупреждение!   " + erra);//исключение при отказе от перезаписи файлов
+                        }
+
+
+
                     }
-                    catch (Exception)
+                    catch (Exception erra)
                     {
-                        MessageBox.Show("Предупреждение! Вы не сохранили провереный файл!" );//исключение при отказе от перезаписи файлов
+                        MessageBox.Show("Предупреждение!   "+ erra );
                     }
                     finally
                     {
-                        workbookb.Close();
+                        workbookb.Close(false);
                     }
                     }
 
@@ -335,9 +383,9 @@ namespace WindowsFormsApplication1
         }
 
         //функция для выбора пути к файлам
-        public FileInfo[] Failname()
+        public DirectoryInfo Failname()
         {
-            FileInfo[] Files;
+           
             FolderBrowserDialog FBD = new FolderBrowserDialog();
             FBD.ShowNewFolderButton = false;
 
@@ -352,20 +400,26 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("ошибка не указан путь ");
 
             }
-            DirectoryInfo dir = new DirectoryInfo(way);
+            DirectoryInfo direct = new DirectoryInfo(way);
+            return direct;
 
-            string t = "*.xls*";
-            Files = dir.GetFiles(t, SearchOption.TopDirectoryOnly);
-            return Files;
-
-           
+            
         }
 
-        //функция для определения даты
-        public bool Date(string test)
+        //выборка файлов
+        public FileInfo[] Failexcel(DirectoryInfo direct)
         {
-            DateTime date;
-            bool isNum = DateTime.TryParse(test, out date);
+            FileInfo[] Files;
+            string t = "*.xls*";
+            Files = direct.GetFiles(t, SearchOption.TopDirectoryOnly);
+            return Files;
+        }
+
+
+            //функция для определения даты
+            public bool Date(string znachcells)
+        {
+            bool isNum = DateTime.TryParse(znachcells, out DateTime date);
             if (isNum)
                 return true;
             else
@@ -374,10 +428,9 @@ namespace WindowsFormsApplication1
 
 
      //функция для определения целого числа
-        public bool chislo(string test)
+        public bool chislo(string znachcells)
         {
-            int num;
-            bool isNum = int.TryParse(test, out num);
+            bool isNum = int.TryParse(znachcells, out int num);
             if (isNum)
                 return true;
             else
@@ -385,14 +438,18 @@ namespace WindowsFormsApplication1
         }
 
         //функция для определения числа с запятой
-        public bool Dubl(string test)
+        public bool Dubl(string znachcells)
         {
-            double num;
-            bool isNum = double.TryParse(test, out num);
+            bool isNum = double.TryParse(znachcells, out double num);
             if (isNum)
                 return true;
             else
                 return false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
