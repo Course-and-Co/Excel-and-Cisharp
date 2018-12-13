@@ -106,7 +106,7 @@ namespace WindowsFormsApplication1
                                    
                                     string znachcells = excelSheet.Cells[i, j].Value.ToString();//значение ячейки
 
-
+                                    //int h;
                                     switch (j)
                                     {
 
@@ -117,7 +117,7 @@ namespace WindowsFormsApplication1
                                             }
                                             else
                                             {
-                                                oshibke += "\n\r Ошибка в столбце '№', строка " +
+                                                oshibke += "\n\r Ошибка в столбце '3', строка " +
                                                     i + " столбец " + j + "\n\r";
                                                 selectCelss = excelSheet.Cells[i, j];
                                                 selectCelss.Interior.Color = oleColor;
@@ -303,7 +303,7 @@ namespace WindowsFormsApplication1
 
 
                                         default:
-                                            oshibke += "\n\rОшибка \n\r"; ;
+                                            oshibke += "\n\rОшибка \n\r"; 
                                             selectCelss = excelSheet.Cells[i, j];
                                             selectCelss.Interior.Color = oleColor;
                                             break;
@@ -449,6 +449,14 @@ namespace WindowsFormsApplication1
             else
                 return false;
         }
+        //static void AppendText(this RichTextBox box, string text, Color color)
+        //{
+        //    box.SelectionStart = box.TextLength;
+        //    box.SelectionLength = 0;
+        //    box.SelectionColor = color;
+        //    box.AppendText(text);
+        //    box.SelectionColor = box.ForeColor;
+        //}
 
         private void button1_Click(object sender, EventArgs e)
         {
