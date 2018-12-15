@@ -42,6 +42,17 @@ namespace UnitTest1
         }
 
         [TestMethod]
+        public void TestMethodDATA4()
+        {
+            string str = null;
+            bool ogedaem = false;
+            Form1 t = new Form1();
+            bool rezult = t.Date(str);
+            Assert.AreEqual(ogedaem, rezult);
+
+        }
+
+        [TestMethod]
         public void TestMethodDUBL1()
         {
             string str = "12.13";
@@ -72,6 +83,15 @@ namespace UnitTest1
             Assert.AreEqual(ogedaem, rezult);
         }
 
+        [TestMethod]
+        public void TestMethodDUBL4()
+        {
+            string str = null;
+            bool ogedaem = false;
+            Form1 t = new Form1();
+            bool rezult = t.Dubl(str);
+            Assert.AreEqual(ogedaem, rezult);
+        }
 
         [TestMethod]
         public void TestMethodCislo1()
@@ -97,6 +117,16 @@ namespace UnitTest1
         public void TestMethodCislo3()
         {
             string str = "строка";
+            bool ogedaem = false;
+            Form1 t = new Form1();
+            bool rezult = t.chislo(str);
+            Assert.AreEqual(ogedaem, rezult);
+        }
+
+        [TestMethod]
+        public void TestMethodCislo4()
+        {
+            string str = null;
             bool ogedaem = false;
             Form1 t = new Form1();
             bool rezult = t.chislo(str);
