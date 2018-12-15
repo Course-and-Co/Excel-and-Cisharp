@@ -30,21 +30,23 @@ namespace WindowsFormsApplication1
 
         
         Workbook workbookb;
+        bool proc = true;
         private void button2_Click(object sender, EventArgs e)
         {
 
             DirectoryInfo direct = Failname();
             FileInfo[] Files = Failexcel(direct);
 
-            int proc = 0;
+            
             foreach (FileInfo fail in Files)
             {
                 if( fail.Name[0] == '~')
                 {
-                    if (proc == 0)
+                    if (proc == true)
                     {
                         MessageBox.Show("Обнаружен открытый процесс!" +
                     " После работы рекомендуется закрыть все процессы MS EXCEL ");//ошибка возникает из за прерваной работы програмы
+                        proc = false;
                     }
                     else
                     {
@@ -271,7 +273,7 @@ namespace WindowsFormsApplication1
                                         case 8:
                                             znachcells = excelSheet.Cells[i, j].Value.ToString();
 
-                                            if (Dubl(znachcells) == true)
+                                            if ((Dubl(znachcells) == true)&&(Convert.ToDouble(znachcells)>0))
                                             {
                                             }
                                             else

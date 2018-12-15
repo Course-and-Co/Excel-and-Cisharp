@@ -36,17 +36,17 @@
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(29, 27);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(332, 321);
+            this.textBox2.Size = new System.Drawing.Size(348, 321);
             this.textBox2.TabIndex = 2;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(196, 376);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Location = new System.Drawing.Point(213, 376);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(164, 25);
             this.button2.TabIndex = 3;
@@ -57,9 +57,9 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(29, 376);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(163, 25);
+            this.button1.Size = new System.Drawing.Size(164, 25);
             this.button1.TabIndex = 4;
             this.button1.Text = "Отмена";
             this.button1.UseVisualStyleBackColor = true;
@@ -73,7 +73,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox2);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Програма-проверялка";
             this.ResumeLayout(false);
