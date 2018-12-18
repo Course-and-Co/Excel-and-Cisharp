@@ -22,8 +22,10 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
+            ToolTip t = new ToolTip();
+            t.SetToolTip(button2, "Выберете папку c EXCEl файлами");
+            t.SetToolTip(button1, "Выход");
 
-            
         }
         string way = "";
 
@@ -457,6 +459,11 @@ namespace WindowsFormsApplication1
         {
            
             Close();
+        }
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+            
         }
     }
 }
